@@ -141,6 +141,9 @@ function resetGame() {
     updateStatistics();
 }
 
+// ファイル読み込み数を表示するための変数
+let loadedFileCount = 0;
+
 // 複数のExcelファイルを読み込んで履歴に追加
 function uploadAndLoadExcel(event) {
     const files = event.target.files;
@@ -149,6 +152,7 @@ function uploadAndLoadExcel(event) {
         return;
     }
 
+    let filesProcessed = 0;
     Array.from(files).forEach(file => {
         const reader = new FileReader();
         reader.onload = function(e) {
@@ -164,8 +168,20 @@ function uploadAndLoadExcel(event) {
                 }
             });
 
-            alert(`${file.name} を読み込みました。履歴に${jsonData.length}件追加しました`);
+            filesProcessed++;
+            loadedFileCount++;
+
+            // 全部読み終わったら表示更新
+            if (filesProcessed === files.length) {
+                updateLoadedFileCount();
+                alert(`ファイルを${files.length}個読み込みました。履歴に合計${playerMoves.length}手追加しました`);
+            }
         };
         reader.readAsArrayBuffer(file);
     });
+}
+
+// 読み込んだファイル数を更新して表示
+function updateLoadedFileCount() {
+    document.getElementById('loaded-files').textContent = `読み込んだファイル数: ${loadedFileCount}個`;
 }
