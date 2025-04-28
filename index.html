@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIとじゃんけん</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>AIとじゃんけん</h1>
+
+        <div class="choices">
+            <button onclick="playGame('グー')">グー</button>
+            <button onclick="playGame('チョキ')">チョキ</button>
+            <button onclick="playGame('パー')">パー</button>
+        </div>
+
+        <div id="result"></div>
+
+        <div id="statistics" class="statistics">
+            <h2>統計</h2>
+            <p id="total-games">総ゲーム数: 0</p>
+            <p id="win-count">勝数: 0</p>
+            <p id="draw-count">引き分け数: 0</p>
+            <p id="loss-count">負け数: 0</p>
+            <p id="win-rate">勝率（引き分け除外）: 0%</p>
+        </div>
+
+        <div class="buttons">
+            <button onclick="downloadResults()">結果をExcelで保存</button>
+            <button onclick="resetGame()">リセット</button>
+            <button onclick="document.getElementById('excel-upload').click()">Excelファイルを読み込む</button>
+            <input type="file" id="excel-upload" multiple style="display: none;">
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('excel-upload').addEventListener('change', uploadAndLoadExcel);
+    </script>
+</body>
+</html>
